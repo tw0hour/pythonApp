@@ -6,6 +6,7 @@ pygame.init()
 class Player(pygame.sprite.Sprite):
     # TODO: need to define attribute
     def __init__(self):
+        super().__init__()
         self.money = 100
         self.point = 100
         self.image = pygame.image.load('ressources/2.png')
@@ -29,11 +30,11 @@ while running:
     # set background image
     screen.blit(background, (-500, -200))
 
-    # apply background
-    pygame.display.flip()
-
     # apply player image
     screen.blit(player.image, player.rect)
+
+    # apply background
+    pygame.display.flip()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
