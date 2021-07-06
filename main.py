@@ -1,19 +1,6 @@
 import pygame
-
+from Game import Game
 pygame.init()
-
-
-class Player(pygame.sprite.Sprite):
-    # TODO: need to define attribute
-    def __init__(self):
-        super().__init__()
-        self.money = 100
-        self.point = 100
-        self.image = pygame.image.load('ressources/2.png')
-        self.rect = self.image.get_rect()
-        self.rect.x = 500
-        self.rect.y = 500
-
 
 # app name
 pygame.display.set_caption("Jeu de plateau")
@@ -21,8 +8,10 @@ pygame.display.set_caption("Jeu de plateau")
 screen = pygame.display.set_mode((1500, 1000))
 # load image
 background = pygame.image.load('ressources/Razer-H1-Wallpaper-2560x1440_290520.png')
-# create player
-player = Player()
+
+# load game
+game = Game()
+
 running = True
 
 while running:
@@ -31,7 +20,7 @@ while running:
     screen.blit(background, (-500, -200))
 
     # apply player image
-    screen.blit(player.image, player.rect)
+    screen.blit(game.player.image, game.player.rect)
 
     # apply background
     pygame.display.flip()
