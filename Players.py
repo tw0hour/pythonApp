@@ -14,6 +14,22 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 500
         self.rect.y = 500
 
+    # def moveRight(self):
+    #     self.rect.x += 20
+    #
+    # def moveLeft(self):
+    #     self.rect.x -= 20
+    #
+    # def moveUp(self):
+    #     self.rect.y -= 20
+    #
+    # def moveDown(self):
+    #     self.rect.y += 20
+
+    def move(self, x, y):
+        self.rect.y = y
+        self.rect.x = x
+
     def gainMoney(self, money):
         self.money += money
 
