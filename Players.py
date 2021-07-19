@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 
@@ -29,3 +31,8 @@ class Player(pygame.sprite.Sprite):
             self.point = 0
 
         self.point -= point
+
+    # lancé du dé
+    def launchThimble(self):
+        d = random.randint(1,6)
+        return d
