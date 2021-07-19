@@ -30,3 +30,20 @@ while running:
             running = False
             pygame.quit()
             print("close my dude")
+        # elif event.type == pygame.KEYDOWN:
+        #
+        #     if event.key == pygame.K_RIGHT:
+        #         game.player.moveRight()
+        #         print("touche droite")
+        #
+        #     if event.key == pygame.K_LEFT:
+        #         game.player.moveLeft()
+        #         print("touche gauche")
+        #
+        #     if event.key == pygame.K_DOWN:
+        #         game.player.moveDown()
+        #         print("touche bas")
+        #
+        #     if event.key == pygame.K_UP:
+        #         game.player.moveUp()
+        #         print("touche haut")
