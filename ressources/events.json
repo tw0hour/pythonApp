@@ -1,0 +1,104 @@
+{
+  "events" : [
+    {
+      "id" : 1,
+      "target" : "money",
+      "effect": 12
+    },
+    {
+      "id" : 2,
+      "target" : "move",
+      "effect": 12
+    },
+    {
+      "id" : 3,
+      "target" : "move",
+      "effect": -3
+    },
+    {
+      "id" : 4,
+      "target" : "money",
+      "effect": -12
+    },
+    {
+      "id" : 5,
+      "target" : "money",
+      "effect": 1
+    },
+    {
+      "id" : 6,
+      "target" : "move",
+      "effect": 6
+    },
+    {
+      "id" : 7,
+      "target" : "move",
+      "effect": -8
+    },
+    {
+      "id" : 8,
+      "target" : "money",
+      "effect": -4
+    },
+    {
+      "id" : 9,
+      "target" : "money",
+      "effect": 15
+    },
+    {
+      "id" : 10,
+      "target" : "move",
+      "effect": 12
+    },
+    {
+      "id" : 11,
+      "target" : "move",
+      "effect": -20
+    },
+    {
+      "id" : 12,
+      "target" : "money",
+      "effect": 15
+    },
+    {
+      "id" : 13,
+      "target" : "move",
+      "effect": 12
+    },
+    {
+      "id" : 14,
+      "target" : "move",
+      "effect": 30
+    },
+    {
+      "id" : 15,
+      "target" : "money",
+      "effect": 25
+    },
+    {
+      "id" : 16,
+      "target" : "money",
+      "effect": 5
+    },
+    {
+      "id" : 17,
+      "target" : "move",
+      "effect": 12
+    },
+    {
+      "id" : 18,
+      "target" : "move",
+      "effect": -9
+    },
+    {
+      "id" : 19,
+      "target" : "money",
+      "effect": 8
+    },
+    {
+      "id" : 20,
+      "target" : "money",
+      "effect": 1
+    }
+  ]
+}
