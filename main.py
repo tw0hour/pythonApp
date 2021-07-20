@@ -1,5 +1,6 @@
 import pygame
 from Game import Game
+from Event import Event
 
 pygame.init()
 
@@ -21,7 +22,6 @@ play_button_rect.x = 400
 play_button_rect.y = 400
 # load game
 game = Game()
-
 running = True
 
 while running:
