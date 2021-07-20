@@ -3,12 +3,13 @@ import pygame
 
 class Player(pygame.sprite.Sprite):
     # TODO: need to define attribute
-    def __init__(self):
+    def __init__(self, imgPath):
         super().__init__()
         self.money = 100
         self.point = 100
-        self.image = pygame.transform.scale(pygame.image.load('ressources/2.png'), (25, 25))
+        self.image = pygame.transform.scale(pygame.image.load(imgPath), (25, 25))
         self.rect = self.image.get_rect()
+
         # left right
         self.rect.x = 30
         # up down

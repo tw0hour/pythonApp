@@ -20,6 +20,7 @@ play_button = pygame.transform.scale(pygame.image.load('ressources/startgame.svg
 play_button_rect = play_button.get_rect()
 play_button_rect.x = 400
 play_button_rect.y = 400
+
 # load game
 game = Game()
 running = True
