@@ -20,8 +20,3 @@ class Game:
 
         # apply player image
         screen.blit(self.player.image, self.player.rect)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                pygame.quit()
-                print("close game")

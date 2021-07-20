@@ -2,6 +2,7 @@ import pygame
 
 
 class Player(pygame.sprite.Sprite):
+    # TODO: need to define attribute
     def __init__(self):
         super().__init__()
         self.money = 100
@@ -12,7 +13,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 30
         # up down
         self.rect.y = 30
-
 
     def move(self, x, y):
         self.rect.y = y

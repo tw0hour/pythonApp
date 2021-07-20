@@ -15,6 +15,11 @@ background = pygame.image.load('ressources/Razer-H1-Wallpaper-2560x1440_290520.p
 # load boardGame image
 boardGame = pygame.image.load('ressources/BoardGame.png')
 
+# button start game
+play_button = pygame.transform.scale(pygame.image.load('ressources/startgame.svg.png'), (100, 100))
+play_button_rect = play_button.get_rect()
+play_button_rect.x = 400
+play_button_rect.y = 400
 # load game
 game = Game()
 running = True
@@ -27,6 +32,7 @@ while running:
     else:
         # Home screen
         screen.blit(background, (-850, 0))
+        screen.blit(play_button, play_button_rect)
 
     # apply background and change
     pygame.display.flip()
@@ -46,4 +52,8 @@ while running:
                 game.is_playing = True
             if event.key == pygame.K_LEFT:
                 game.is_playing = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # mouse click
+            if play_button_rect.collidepoint(event.pos):
+                game.is_playing = True
     # end event
