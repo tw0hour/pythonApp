@@ -13,15 +13,13 @@ class Game:
         # JEU A COMMMENCER OU PAS
         self.is_playing = False
         # create player
-        self.player1 = Player('ressources/pion/1')
-        self.player2 = Player('ressources/pion/2')
-        self.player3 = Player('ressources/pion/3')
-        self.player4 = Player('ressources/pion/4')
+        self.player1 = Player('ressources/pion/1.png')
+        self.player2 = Player('ressources/pion/2.png')
+        self.player3 = Player('ressources/pion/3.png')
+        self.player4 = Player('ressources/pion/4.png')
 
         self.thimble1 = Thimble()
         self.thimble2 = Thimble()
-
-        self.player = Player('ressources/pion/2.png')
 
         self.case1 = Case()
 
@@ -48,19 +46,19 @@ class Game:
         print("Joueur " + first + "commence !")
 
     def swithTurn(self):
-        if self.player1.turn == True:
+        if self.player1.turn:
             self.player1.turn = False
             self.player2.turn = True
             print("Au tour du Joueur 2 de jouer !")
-        if self.player2.turn == True:
+        if self.player2.turn:
             self.player2.turn = False
             self.player3.turn = True
             print("Au tour du Joueur 3 de jouer !")
-        if self.player3.turn == True:
+        if self.player3.turn:
             self.player3.turn = False
             self.player4.turn = True
             print("Au tour du Joueur 4 de jouer !")
-        if self.player4.turn == True:
+        if self.player4.turn:
             self.player4.turn = False
             self.player1.turn = True
             print("Au tour du Joueur 1 de jouer !")
