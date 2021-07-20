@@ -13,8 +13,7 @@ class Game:
         self.player = Player('ressources/pion/2.png')
         self.case1 = Case()
 
-    def update(self, screen,  BackGround):
-
+    def update(self, screen, BackGround):
         # apply boardGame image
         screen.blit(BackGround, (0, 0))
 
