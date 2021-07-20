@@ -3,8 +3,8 @@ import random
 
 class Thimble:
     def __init__(self):
-        self.thimble1 = pygame.transform.scale(pygame.image.load('ressources/2.png'), (70, 70))
-        self.thimble2 = pygame.transform.scale(pygame.image.load('ressources/2.png'), (70, 70))
+        self.thimble1 = pygame.transform.scale(pygame.image.load('ressources/pion/2.png'), (70, 70))
+        self.thimble2 = pygame.transform.scale(pygame.image.load('ressources/pion/2.png'), (70, 70))
 
     # lancé des dé
     def launchThimble(self):

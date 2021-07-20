@@ -10,7 +10,7 @@ class Game:
         # JEU A COMMMENCER OU PAS
         self.is_playing = False
         # create player
-        self.player = Player('ressources/2.png')
+        self.player = Player('ressources/pion/2.png')
         self.case1 = Case()
 
     def update(self, screen,  BackGround):
