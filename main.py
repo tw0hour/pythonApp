@@ -1,5 +1,7 @@
 import pygame
 from Game import Game
+from Event import Event
+
 pygame.init()
 
 # app name
@@ -11,7 +13,6 @@ background = pygame.image.load('ressources/Razer-H1-Wallpaper-2560x1440_290520.p
 
 # load game
 game = Game()
-
 running = True
 
 while running:
@@ -24,6 +25,7 @@ while running:
 
     # apply background
     pygame.display.flip()
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

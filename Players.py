@@ -50,5 +50,5 @@ class Player(pygame.sprite.Sprite):
 
     # lancé du dé
     def launchThimble(self):
-        d = random.randint(1,6)
+        d = random.randint(1, 6)
         return d
