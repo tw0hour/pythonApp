@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 30
         # up down
         self.rect.y = 30
+        self.turn = False
 
     def move(self, x, y):
         self.rect.y = y
