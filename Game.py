@@ -1,6 +1,5 @@
+import json
 import random
-
-import pygame
 
 from Case import Case
 from Players import Player
@@ -8,20 +7,17 @@ from Thimble import Thimble
 
 
 class Game:
-
     def __init__(self):
         # JEU A COMMMENCER OU PAS
         self.is_playing = False
         # create player
-        self.player1 = Player('ressources/pion/1')
-        self.player2 = Player('ressources/pion/2')
-        self.player3 = Player('ressources/pion/3')
-        self.player4 = Player('ressources/pion/4')
+        self.player1 = Player('ressources/pion/1.png')
+        self.player2 = Player('ressources/pion/2.png')
+        self.player3 = Player('ressources/pion/3.png')
+        self.player4 = Player('ressources/pion/4.png')
 
         self.thimble1 = Thimble()
         self.thimble2 = Thimble()
-
-        self.player = Player('ressources/pion/2.png')
 
         self.case1 = Case()
 
@@ -64,3 +60,9 @@ class Game:
             self.player4.turn = False
             self.player1.turn = True
             print("Au tour du Joueur 1 de jouer !")
+
+
+    def save(self): #KO  <Object of type function is not JSON serializable>
+        saveJson = json.dumps(Game.__init__)
+        with open("ressources/backup/backup.json", "w") as backupFile:
+            backupFile.write(saveJson)
