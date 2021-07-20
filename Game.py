@@ -13,13 +13,15 @@ class Game:
         # JEU A COMMMENCER OU PAS
         self.is_playing = False
         # create player
-        self.player1 = Player()
-        self.player2 = Player()
-        self.player3 = Player()
-        self.player4 = Player()
+        self.player1 = Player('ressources/pion/1')
+        self.player2 = Player('ressources/pion/2')
+        self.player3 = Player('ressources/pion/3')
+        self.player4 = Player('ressources/pion/4')
 
         self.thimble1 = Thimble()
         self.thimble2 = Thimble()
+
+        self.player = Player('ressources/pion/2.png')
 
         self.case1 = Case()
 

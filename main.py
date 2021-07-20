@@ -16,7 +16,7 @@ background = pygame.image.load('ressources/Razer-H1-Wallpaper-2560x1440_290520.p
 boardGame = pygame.image.load('ressources/BoardGame.png')
 
 # button start game
-play_button = pygame.transform.scale(pygame.image.load('ressources/startgame.svg.png'), (100, 100))
+play_button = pygame.transform.scale(pygame.image.load('ressources/buton/play_buton.png'), (199, 132))
 play_button_rect = play_button.get_rect()
 play_button_rect.x = 400
 play_button_rect.y = 400
