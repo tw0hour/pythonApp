@@ -9,10 +9,12 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.money = 100
         self.point = 100
-        self.image = pygame.image.load('ressources/2.png')
+        self.image = pygame.transform.scale(pygame.image.load('ressources/2.png'), (25, 25))
         self.rect = self.image.get_rect()
-        self.rect.x = 500
-        self.rect.y = 500
+        # left right
+        self.rect.x = 30
+        # up down
+        self.rect.y = 30
 
     # def moveRight(self):
     #     self.rect.x += 20
