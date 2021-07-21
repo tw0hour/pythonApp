@@ -110,7 +110,6 @@ while running:
                 if MsgBox == "yes":
                     game.load()
                     game.is_playing = True
-                    game.update()
 
             # EVENT IN GAME
             if save_button_rect.collidepoint(event.pos) & game.is_playing:
