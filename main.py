@@ -40,6 +40,8 @@ game = Game()
 running = True
 
 while running:
+
+    game.save()
     if game.is_playing:
         # game started
         game.update(screen, boardGame)
