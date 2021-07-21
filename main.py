@@ -3,7 +3,6 @@ from tkinter import messagebox, Tk
 
 import pygame
 from Game import Game
-from Event import Event
 
 pygame.init()
 
@@ -41,7 +40,6 @@ game = Game()
 running = True
 
 while running:
-    game.save()
     if game.is_playing:
         # game started
         game.update(screen, boardGame)

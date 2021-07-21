@@ -31,6 +31,7 @@ class Game:
 
     def whoIsFirst(self):
         first = random.randint(1, 4)
+        print("whoIsFist :", first)
 
         if first == 1:
             self.player1.turn = True
@@ -41,28 +42,35 @@ class Game:
         if first == 4:
             self.player4.turn = True
 
-        print("Joueur " + first + "commence !")
+        print("Joueur", first, "commence !")
 
-    def swithTurn(self):
+    def switchTurn(self):
         if self.player1.turn == True:
             self.player1.turn = False
             self.player2.turn = True
             print("Au tour du Joueur 2 de jouer !")
+            return
+
         if self.player2.turn == True:
             self.player2.turn = False
             self.player3.turn = True
             print("Au tour du Joueur 3 de jouer !")
+            return
+
         if self.player3.turn == True:
             self.player3.turn = False
             self.player4.turn = True
             print("Au tour du Joueur 4 de jouer !")
+            return
+
         if self.player4.turn == True:
             self.player4.turn = False
             self.player1.turn = True
             print("Au tour du Joueur 1 de jouer !")
+            return
 
 
     def save(self): #KO  <Object of type function is not JSON serializable>
-        saveJson = json.dumps(Game.__init__)
+        saveJson = json.dumps(vars(Game))
         with open("ressources/backup/backup.json", "w") as backupFile:
             backupFile.write(saveJson)
