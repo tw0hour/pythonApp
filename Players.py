@@ -37,3 +37,13 @@ class Player(pygame.sprite.Sprite):
             self.point = 0
 
         self.point -= point
+
+    def playerReset(self):
+        self.money = 100
+        self.point = 100
+        self.rect = self.image.get_rect()
+        self.rect.x = 30
+        self.rect.y = 30
+        self.turn = False
+
+        return
