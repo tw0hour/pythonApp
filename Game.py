@@ -3,6 +3,7 @@ import random
 import pygame
 
 from Case import Case
+from Event import Event
 from Players import Player
 from Thimble import Thimble
 
@@ -20,40 +21,71 @@ class Game:
         self.thimble1 = Thimble()
         self.thimble2 = Thimble()
 
-        self.case1 = Case(1,1,1)
+        self.events = self.getEvents()
 
+    def getEvents(self):
+        with open("ressources/events.json") as file:
+            events = []
+            data = json.load(file)
+            dataEvents = data["events"]
+
+            for event in dataEvents:
+                events.append(Event(event["id"], event["target"], event["effect"]))
+
+            return events
 
     def printBoard(self,screen,tab):
         cases = []
-        spaceRect = pygame.Rect(0, 0, 100, 100)
-        num = 0
+        moneyEvents = [x for x in self.getEvents() if x.target == "money"]
+        moveEvents = [x for x in self.getEvents() if x.target == "move"]
+        posX, posY = 30, 30
 
-        x = 30
-        y = 30
         for i in range(len(tab)):
-            x = 30
-            y += 75
+            posX = 30
+            posY += 75
             for j in range(len(tab[i])):
-                # spaceRect.topleft = (5 + (x * 8), 5 + (y * 8))
-                if tab[i][j] == 1:
-                    pygame.draw.rect(screen, (0, 0, 0), (x, y, 70, 70))
 
-                    # cases.append(Case(x,y,0))
-                # else:
-                #     cases.append(Case())
-                x += 75
+                # move event case
+                if tab[i][j] == 2:
+                    if len(moveEvents) > 0:
+                        cases.append(Case(posX, posY, moveEvents.pop()))
+                        pygame.draw.rect(screen, (255, 36, 65), (posX, posY, 70, 70))
+                    else:
+                        tab[i][j] = 1
+
+                # money event case
+                if tab[i][j] == 3:
+                    if len(moneyEvents) > 0:
+                        cases.append(Case(posX, posY, moneyEvents.pop()))
+                        pygame.draw.rect(screen, (255, 189, 36), (posX, posY, 70, 70))
+                    else:
+                        tab[i][j] = 1
+
+                # normal case
+                if tab[i][j] == 1:
+                    cases.append(Case(posX, posY, None))
+                    pygame.draw.rect(screen, (66, 135, 245), (posX, posY, 70, 70))
+
+                # -1 start -2 end
+                if tab[i][j] == -1 or tab[i][j] == -2:
+                    cases.append(Case(posX, posY, 0))
+                    pygame.draw.rect(screen, (0, 0, 0), (posX, posY, 70, 70))
+
+                posX += 75
 
 
     def run(self,screen,tab):
+        # end = False
+        # while not end :
         self.printBoard(screen,tab)
 
-    def update(self, screen, BackGround):
-
-        # apply boardGame image
-        screen.blit(BackGround, (0, 0))
-
-        # apply player image
-        screen.blit(self.player1.image, self.player1.rect)
+    # def update(self, screen, BackGround):
+    #
+    #     # apply boardGame image
+    #     screen.blit(BackGround, (0, 0))
+    #
+    #     # apply player image
+    #     screen.blit(self.player1.image, self.player1.rect)
 
     def whoIsFirst(self):
         first = random.randint(1, 4)

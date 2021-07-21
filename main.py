@@ -1,7 +1,10 @@
 import math
 from tkinter import messagebox, Tk
 import pygame
+
+from Event import Event
 from Game import Game
+import json
 
 pygame.init()
 
@@ -58,18 +61,21 @@ menu_button_rect.y = 800
 
 # load game
 game = Game()
+
 Tk().wm_withdraw()  # to hide the main window
 running = True
 
+# Get events Game
+
 tab = [
-        [1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
-        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 0, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
-        [1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+        [-1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+        [1, 0, 2, 0, 1, 0, 0, 1, 0, 3],
+        [1, 0, 1, 0, 3, 1, 0, 2, 0, 1],
+        [2, 0, 1, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 1, 0, 1, 0, 2],
+        [1, 0, 2, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 3, 0, 0, 1, 0, 1],
+        [1, 1, 1, 0, 1, 1, 1, 1, 0, -2]
     ]
 
 
