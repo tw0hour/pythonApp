@@ -63,6 +63,7 @@ running = True
 while running:
     if game.is_playing:
         # game started
+        game.run(screen)
         game.update(screen, boardGame)
         screen.blit(quit_button, quit_button_rect)
         screen.blit(save_button, save_button_rect)
