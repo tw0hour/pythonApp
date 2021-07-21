@@ -69,8 +69,7 @@ class Game:
             print("Au tour du Joueur 1 de jouer !")
             return
 
-
-    def save(self): #KO  <Object of type function is not JSON serializable>
+    def save(self):  # KO  <Object of type function is not JSON serializable>
         saveJson = json.dumps(vars(Game))
         with open("ressources/backup/backup.json", "w") as backupFile:
             backupFile.write(saveJson)
