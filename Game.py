@@ -1,6 +1,5 @@
 import json
 import random
-
 import pygame
 
 from Case import Case
@@ -106,7 +105,40 @@ class Game:
             print("Au tour du Joueur 1 de jouer !")
             return
 
-    def save(self):  # KO  <Object of type function is not JSON serializable>
-        saveJson = json.dumps(vars(Game))
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
+
+    def save(self):
+        gameProps = [
+            self.player1.turn,
+            self.player1.money,
+            self.player1.point,
+            self.player1.rect.x,
+            self.player1.rect.y,
+
+            self.player2.turn,
+            self.player2.money,
+            self.player2.point,
+            self.player2.rect.x,
+            self.player2.rect.y,
+
+            self.player3.turn,
+            self.player3.money,
+            self.player3.point,
+            self.player3.rect.x,
+            self.player3.rect.y,
+
+            self.player4.turn,
+            self.player4.money,
+            self.player4.point,
+            self.player4.rect.x,
+            self.player4.rect.y,
+        ]
+        saveJson = json.dumps(gameProps)
+
         with open("ressources/backup/backup.json", "w") as backupFile:
             backupFile.write(saveJson)
+
+    def load(self):
+        return
+

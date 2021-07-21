@@ -1,8 +1,10 @@
 import pygame.sprite
 
+from Event import Event
+
 
 class Case(pygame.sprite.Sprite):
-    def __init__(self):
-        self.x = 234
-        self.y = 234
-        self.event = 1
+    def __init__(self, x, y, event):
+        self.x = x
+        self.y = y
+        self.event = event
