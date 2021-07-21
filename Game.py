@@ -1,6 +1,5 @@
 import json
 import random
-
 from Case import Case
 from Players import Player
 from Thimble import Thimble
@@ -101,7 +100,7 @@ class Game:
             backupFile.write(saveJson)
 
     def load(self):
-        with open("ressources/backup.json") as backupFile:
+        with open("ressources/backup/backup.json") as backupFile:
             data = json.load(backupFile)
 
             self.player1.turn = data[0],
@@ -138,7 +137,3 @@ class Game:
         self.player4.playerReset()
 
         return
-
-
-
-
