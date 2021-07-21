@@ -62,13 +62,14 @@ Tk().wm_withdraw()  # to hide the main window
 running = True
 
 tab = [
-        [0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+        [1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+        [1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
     ]
 
 
@@ -76,8 +77,7 @@ while running:
 
     if game.is_playing:
         # game started
-        pygame.draw.rect(screen, (
-            0, 0, 0), (0, 0, screen.get_width(), screen.get_height()))
+        pygame.draw.rect(screen, (255, 255, 255), (0, 0, screen.get_width(), screen.get_height()))
         game.run(screen,tab)
         # game.update(screen, boardGame)
         screen.blit(quit_button, quit_button_rect)

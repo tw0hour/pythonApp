@@ -26,20 +26,22 @@ class Game:
     def printBoard(self,screen,tab):
         cases = []
         spaceRect = pygame.Rect(0, 0, 100, 100)
+        num = 0
 
         x = 30
         y = 30
         for i in range(len(tab)):
             x = 30
-            y += 55
+            y += 75
             for j in range(len(tab[i])):
                 # spaceRect.topleft = (5 + (x * 8), 5 + (y * 8))
                 if tab[i][j] == 1:
-                    pygame.draw.rect(screen, (0, 0, 0), (x, y, 50, 50))
+                    pygame.draw.rect(screen, (0, 0, 0), (x, y, 70, 70))
+
                     # cases.append(Case(x,y,0))
                 # else:
                 #     cases.append(Case())
-                x += 55
+                x += 75
 
 
     def run(self,screen,tab):
