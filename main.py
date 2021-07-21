@@ -60,11 +60,24 @@ menu_button_rect.y = 800
 game = Game()
 running = True
 
+tab = [
+        [0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+    ]
+
+
 while running:
     if game.is_playing:
         # game started
-        game.run(screen)
-        game.update(screen, boardGame)
+        pygame.draw.rect(screen, (
+            0, 0, 0), (0, 0, screen.get_width(), screen.get_height()))
+        game.run(screen,tab)
+        # game.update(screen, boardGame)
         screen.blit(quit_button, quit_button_rect)
         screen.blit(save_button, save_button_rect)
         screen.blit(menu_button, menu_button_rect)

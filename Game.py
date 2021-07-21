@@ -23,12 +23,27 @@ class Game:
         self.case1 = Case(1,1,1)
 
 
-    def printBoard(self,screen):
+    def printBoard(self,screen,tab):
         cases = []
-        pygame.draw.rect(screen, (0, 0, 0), (cases.x, cases.y, 32, 32))
+        spaceRect = pygame.Rect(0, 0, 100, 100)
 
-    def run(self,screen):
-        self.printBoard(screen)
+        x = 30
+        y = 30
+        for i in range(len(tab)):
+            x = 30
+            y += 55
+            for j in range(len(tab[i])):
+                # spaceRect.topleft = (5 + (x * 8), 5 + (y * 8))
+                if tab[i][j] == 1:
+                    pygame.draw.rect(screen, (0, 0, 0), (x, y, 50, 50))
+                    # cases.append(Case(x,y,0))
+                # else:
+                #     cases.append(Case())
+                x += 55
+
+
+    def run(self,screen,tab):
+        self.printBoard(screen,tab)
 
     def update(self, screen, BackGround):
 
@@ -180,13 +195,5 @@ class Game:
     #     return value;
     # }
 
-    tab = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ]
+
 
