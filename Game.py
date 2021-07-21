@@ -110,32 +110,32 @@ class Game:
             backupFile.write(saveJson)
 
     def load(self):
-        with open("ressources/backup.json") as backupFile:
+        with open("ressources/backup/backup.json") as backupFile:
             data = json.load(backupFile)
 
-            self.player1.turn = data[0],
-            self.player1.money = data[1],
-            self.player1.point = data[2],
-            self.player1.rect.x = data[3],
-            self.player1.rect.y = data[4],
+            self.player1.turn = data[0]
+            self.player1.money = data[1]
+            self.player1.point = data[2]
+            self.player1.rect.x = data[3]
+            self.player1.rect.y = data[4]
 
-            self.player2.turn = data[5],
-            self.player2.money = data[6],
-            self.player2.point = data[7],
-            self.player2.rect.x = data[8],
-            self.player2.rect.y = data[9],
+            self.player2.turn = data[5]
+            self.player2.money = data[6]
+            self.player2.point = data[7]
+            self.player2.rect.x = data[8]
+            self.player2.rect.y = data[9]
 
-            self.player3.turn = data[10],
-            self.player3.money = data[11],
-            self.player3.point = data[12],
-            self.player3.rect.x = data[13],
-            self.player3.rect.y = data[14],
+            self.player3.turn = data[10]
+            self.player3.money = data[11]
+            self.player3.point = data[12]
+            self.player3.rect.x = data[13]
+            self.player3.rect.y = data[14]
 
-            self.player4.turn = data[15],
-            self.player4.money = data[16],
-            self.player4.point = data[17],
-            self.player4.rect.x = data[18],
-            self.player4.rect.y = data[19],
+            self.player4.turn = data[15]
+            self.player4.money = data[16]
+            self.player4.point = data[17]
+            self.player4.rect.x = data[18]
+            self.player4.rect.y = data[19]
 
         return
 

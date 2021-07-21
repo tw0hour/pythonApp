@@ -22,19 +22,23 @@ class Player(pygame.sprite.Sprite):
 
     def gainMoney(self, money):
         self.money += money
+        return
 
     def loseMoney(self, money):
         if self.money < money:
             self.money = 0
+            return
 
         self.money -= money
 
     def gainPoint(self, point):
         self.point += point
+        return
 
     def losePoint(self, point):
         if self.point < point:
             self.point = 0
+            return
 
         self.point -= point
 
