@@ -1,7 +1,10 @@
 import json
 import random
+<<<<<<< HEAD
 import pygame
 
+=======
+>>>>>>> b73e201938f7dd337a547591adf2dc6f702fa775
 from Case import Case
 from Players import Player
 from Thimble import Thimble
@@ -194,6 +197,3 @@ class Game:
     #
     #     return value;
     # }
-
-
-

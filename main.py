@@ -58,6 +58,7 @@ menu_button_rect.y = 800
 
 # load game
 game = Game()
+Tk().wm_withdraw()  # to hide the main window
 running = True
 
 tab = [
@@ -72,6 +73,7 @@ tab = [
 
 
 while running:
+
     if game.is_playing:
         # game started
         pygame.draw.rect(screen, (
@@ -110,26 +112,42 @@ while running:
                 game.is_playing = True
 
             if quit_button_menu_rect.collidepoint(event.pos) & (game.is_playing == False):
-                running = False
-                pygame.quit()
-                print("close tab menu")
+
+                MsgBox = messagebox.askquestion('Quitter', 'Voulez vous vraiment quittter l\'application ?')
+                if MsgBox == "yes":
+                    running = False
+                    pygame.quit()
+                    print("close tab menu")
 
             if load_button_rect.collidepoint(event.pos) & (game.is_playing == False):
-                Tk().wm_withdraw()  # to hide the main window
-                messagebox.showinfo('Charger', 'pas encore opérationnel')
+                MsgBox = messagebox.askquestion('Charger', 'Voulez vous charger la derniere partie sauvegarder ?')
+                if MsgBox == "yes":
+                    game.load()
+                    game.is_playing = True
+                    game.update()
 
             # EVENT IN GAME
             if save_button_rect.collidepoint(event.pos) & game.is_playing:
-                Tk().wm_withdraw()  # to hide the main window
-                messagebox.showinfo('Sauvegarder', 'pas encore opérationnel')
+                MsgBox = messagebox.askquestion('Sauvegarder', 'Voulez vous sauvegarder et quitter ?')
+                if MsgBox == "yes":
+                    game.save()
+                    game.gameReset()
+                    game.is_playing = False
 
             if menu_button_rect.collidepoint(event.pos) & game.is_playing:
+                MsgBox = messagebox.askquestion('Menu', 'Voulez vous sauvegarder avant de retourner au menu ?')
+                if MsgBox == "yes":
+                    game.save()
+                game.gameReset()
                 game.is_playing = False
 
             if quit_button_rect.collidepoint(event.pos) & game.is_playing:
-                running = False
-                pygame.quit()
-                print("close tab menu")
+                Tk().wm_withdraw()  # to hide the main window
+                MsgBox = messagebox.askquestion('Quitter', 'Voulez vous vraiment quitter ?')
+                if MsgBox == "yes":
+                    running = False
+                    pygame.quit()
+                    print("close tab menu")
         # end mouse click
 
     # end event
