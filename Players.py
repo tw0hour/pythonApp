@@ -1,30 +1,20 @@
-import random
-
 import pygame
 
 
 class Player(pygame.sprite.Sprite):
     # TODO: need to define attribute
-    def __init__(self):
+    def __init__(self, imgPath):
         super().__init__()
         self.money = 100
         self.point = 100
-        self.image = pygame.image.load('ressources/2.png')
+        self.image = pygame.transform.scale(pygame.image.load(imgPath), (25, 25))
         self.rect = self.image.get_rect()
-        self.rect.x = 500
-        self.rect.y = 500
 
-    # def moveRight(self):
-    #     self.rect.x += 20
-    #
-    # def moveLeft(self):
-    #     self.rect.x -= 20
-    #
-    # def moveUp(self):
-    #     self.rect.y -= 20
-    #
-    # def moveDown(self):
-    #     self.rect.y += 20
+        # left right
+        self.rect.x = 30
+        # up down
+        self.rect.y = 30
+        self.turn = False
 
     def move(self, x, y):
         self.rect.y = y
@@ -47,8 +37,3 @@ class Player(pygame.sprite.Sprite):
             self.point = 0
 
         self.point -= point
-
-    # lancé du dé
-    def launchThimble(self):
-        d = random.randint(1,6)
-        return d
