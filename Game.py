@@ -238,6 +238,8 @@ class Game:
         return
 
     def movePawn(self,nb):
+        if nb >= len(self.cases)-1:
+            nb = len(self.cases)-1
         if self.players[0].turn:
             self.players[0].move(self.cases[nb].y * (70 + 5) + 30, self.cases[nb].x * (70 + 5) + 30)
             return
