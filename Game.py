@@ -166,29 +166,29 @@ class Game:
 
     def save(self):
         gameProps = [
-            self.player1.turn,
-            self.player1.money,
-            self.player1.point,
-            self.player1.rect.x,
-            self.player1.rect.y,
+            self.players[0].turn,
+            self.players[0].money,
+            self.players[0].point,
+            self.players[0].rect.x,
+            self.players[0].rect.y,
 
-            self.player2.turn,
-            self.player2.money,
-            self.player2.point,
-            self.player2.rect.x,
-            self.player2.rect.y,
+            self.players[1].turn,
+            self.players[1].money,
+            self.players[1].point,
+            self.players[1].rect.x,
+            self.players[1].rect.y,
 
-            self.player3.turn,
-            self.player3.money,
-            self.player3.point,
-            self.player3.rect.x,
-            self.player3.rect.y,
+            self.players[2].turn,
+            self.players[2].money,
+            self.players[2].point,
+            self.players[2].rect.x,
+            self.players[2].rect.y,
 
-            self.player4.turn,
-            self.player4.money,
-            self.player4.point,
-            self.player4.rect.x,
-            self.player4.rect.y,
+            self.players[3].turn,
+            self.players[3].money,
+            self.players[3].point,
+            self.players[3].rect.x,
+            self.players[3].rect.y,
         ]
         saveJson = json.dumps(gameProps)
 
@@ -198,39 +198,40 @@ class Game:
     def load(self):
         with open("ressources/backup/backup.json") as backupFile:
             data = json.load(backupFile)
+            self.players = []
 
-            self.player1.turn = data[0]
-            self.player1.money = data[1]
-            self.player1.point = data[2]
-            self.player1.rect.x = data[3]
-            self.player1.rect.y = data[4]
+            self.players[0].turn = data[0]
+            self.players[0].money = data[1]
+            self.players[0].point = data[2]
+            self.players[0].rect.x = data[3]
+            self.players[0].rect.y = data[4]
 
-            self.player2.turn = data[5]
-            self.player2.money = data[6]
-            self.player2.point = data[7]
-            self.player2.rect.x = data[8]
-            self.player2.rect.y = data[9]
+            self.players[1].turn = data[5]
+            self.players[1].money = data[6]
+            self.players[1].point = data[7]
+            self.players[1].rect.x = data[8]
+            self.players[1].rect.y = data[9]
 
-            self.player3.turn = data[10]
-            self.player3.money = data[11]
-            self.player3.point = data[12]
-            self.player3.rect.x = data[13]
-            self.player3.rect.y = data[14]
+            self.players[2].turn = data[10]
+            self.players[2].money = data[11]
+            self.players[2].point = data[12]
+            self.players[2].rect.x = data[13]
+            self.players[2].rect.y = data[14]
 
-            self.player4.turn = data[15]
-            self.player4.money = data[16]
-            self.player4.point = data[17]
-            self.player4.rect.x = data[18]
-            self.player4.rect.y = data[19]
+            self.players[3].turn = data[15]
+            self.players[3].money = data[16]
+            self.players[3].point = data[17]
+            self.players[3].rect.x = data[18]
+            self.players[3].rect.y = data[19]
 
         return
 
     def gameReset(self):
         self.is_playing = False
-        self.player1.playerReset()
-        self.player2.playerReset()
-        self.player3.playerReset()
-        self.player4.playerReset()
+        self.players[0].playerReset()
+        self.players[1].playerReset()
+        self.players[2].playerReset()
+        self.players[3].playerReset()
 
         return
 
