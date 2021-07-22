@@ -96,10 +96,10 @@ class Game:
     def initializePlayers(self):
         posX = self.cases[0].y * (70 + 5) + 30
         posY = self.cases[0].x * (70 + 5) + 30
-        players = [Player("ressources/pion/pion0.png", posX, posY),
-                   Player("ressources/pion/pion1.png", posX + 25, posY),
-                   Player("ressources/pion/pion2.png", posX, posY + 25),
-                   Player("ressources/pion/pion3.png", posX + 25, posY + 25)]
+        players = [Player("ressources/pion/j1.png", posX, posY),
+                   Player("ressources/pion/j2.png", posX + 25, posY),
+                   Player("ressources/pion/j3.png", posX, posY + 25),
+                   Player("ressources/pion/j4.png", posX + 25, posY + 25)]
 
         return players
 
