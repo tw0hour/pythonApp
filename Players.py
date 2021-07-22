@@ -1,11 +1,9 @@
-import random
-
 import pygame
 
 
 class Player(pygame.sprite.Sprite):
     # TODO: need to define attribute
-    def __init__(self, imgPath,posX,posY):
+    def __init__(self, imgPath, posX, posY):
         super().__init__()
         self.money = 100
         self.point = 100
@@ -45,7 +43,7 @@ class Player(pygame.sprite.Sprite):
 
         self.point -= point
 
-    def playerReset(self,x,y):
+    def playerReset(self, x, y):
         self.money = 100
         self.point = 100
         self.rect = self.image.get_rect()
@@ -53,6 +51,3 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = y
         self.turn = False
         self.case = 0
-
-    def throwTheDice(self):
-        return random.randint(2, 12)

@@ -30,7 +30,7 @@ class Game:
         # les dés
         self.movePawn(self.thimble1.sumThimble(self.thimble2))
 
-        # verifie event -> fonction -> action event
+        # TODO verifie event -> fonction -> action event
         self.switchTurn()
         # apply background and change
         pygame.display.flip()
@@ -134,14 +134,6 @@ class Game:
             # money event case
             elif i.event.target == "money":
                 pygame.draw.rect(screen, (255, 189, 36), (posY, posX, 70, 70))
-
-    # def update(self, screen, BackGround):
-    #
-    #     # apply boardGame image
-    #     screen.blit(BackGround, (0, 0))
-    #
-    #     # apply player image
-    #     screen.blit(self.player1.image, self.player1.rect)
 
     def whoIsFirst(self):
         first = random.randint(0, 3)

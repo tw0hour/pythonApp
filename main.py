@@ -81,7 +81,7 @@ game = Game(tab)
 Tk().wm_withdraw()  # to hide the main window
 running = True
 firstTurn = False
-playingue = True
+playing = True
 
 while running:
 
@@ -89,7 +89,7 @@ while running:
         # game started
         pygame.draw.rect(screen, (255, 255, 255), (0, 0, screen.get_width(), screen.get_height()))
         game.run(screen, tab)
-        if firstTurn == False:
+        if not firstTurn:
             game.whoIsFirst()
             firstTurn = True
         # game.update(screen, boardGame)
@@ -98,9 +98,9 @@ while running:
         screen.blit(menu_button, menu_button_rect)
         screen.blit(next_button, next_button_rect)
 
-        if playingue == False:
+        if not playing:
             game.playing()
-            playingue = True
+            playing = True
         sleep(0.1)
         # MsgBox = messagebox.askquestion('Quitter', 'Voulez vous vraiment quittter l\'application ?')
 
@@ -168,7 +168,7 @@ while running:
 
             # next button event
             if next_button_rect.collidepoint(event.pos) & game.is_playing:
-                playingue = False
+                playing = False
 
             # quit button event
             if quit_button_rect.collidepoint(event.pos) & game.is_playing:
