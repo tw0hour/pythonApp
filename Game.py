@@ -1,5 +1,7 @@
 import json
 import random
+from time import sleep
+
 import pygame
 
 from Case import Case
@@ -22,9 +24,15 @@ class Game:
     def run(self, screen, tab):
 
         self.printBoard(screen)
-        for i in range(4) :
+        for i in range(4):
             screen.blit(self.players[i].image, self.players[i].rect)
 
+    def playing(self):
+        # les dés
+        self.movePawn(11)
+        self.switchTurn()
+        # apply background and change
+        pygame.display.flip()
 
 
     def find_in_list_of_list(self, mylist, pos):
@@ -135,11 +143,8 @@ class Game:
 
     def whoIsFirst(self):
         first = random.randint(0, 3)
-        print("whoIsFist :", first)
-
-        self.players[first].turn = True;
-
-        print("Joueur", first, "commence !")
+        self.players[first].turn = True
+        print("Joueur", first + 1, "commence !")
 
     def switchTurn(self):
         if self.players[0].turn == True:
@@ -198,6 +203,7 @@ class Game:
             backupFile.write(saveJson)
 
     def load(self):
+
         with open("ressources/backup/backup.json") as backupFile:
             data = json.load(backupFile)
             self.players = self.initialzePlayers()
