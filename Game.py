@@ -1,6 +1,5 @@
 import json
 import random
-from time import sleep
 
 import pygame
 
@@ -11,7 +10,7 @@ from Thimble import Thimble
 
 
 class Game:
-    def __init__(self,tab):
+    def __init__(self, tab):
         # JEU A COMMMENCER OU PAS
         self.is_playing = False
         self.thimble1 = Thimble()
@@ -19,7 +18,7 @@ class Game:
         self.events = self.getEvents()
         self.cases = self.initializeCases(tab)
         # create player
-        self.players = self.initialzePlayers()
+        self.players = self.initializePlayers()
 
     def run(self, screen, tab):
 
@@ -29,19 +28,22 @@ class Game:
 
     def playing(self):
         # les dés
-        self.movePawn(11)
+        self.movePawn(self.thimble1.sumThimble(self.thimble2))
+
+        # verifie event -> fonction -> action event
         self.switchTurn()
         # apply background and change
         pygame.display.flip()
 
-
-    def find_in_list_of_list(self, mylist, pos):
+    @staticmethod
+    def find_in_list_of_list(mylist, pos):
         for sub_list in mylist:
             if pos in sub_list:
-                return (mylist.index(sub_list), sub_list.index(pos))
+                return mylist.index(sub_list), sub_list.index(pos)
         raise ValueError("'{pos}' is not in list".format(pos=pos))
 
-    def knownCase(self, cases, x, y):
+    @staticmethod
+    def knownCase(cases, x, y):
         for case in cases:
             if case.x == x and case.y == y:
                 return True
@@ -49,16 +51,16 @@ class Game:
 
     def notVisitedCase(self, tab, cases, pos):
 
-        if pos[0] - 1 >= 0 and tab[pos[0]-1][pos[1]] != 0 and not self.knownCase(cases, pos[0] - 1, pos[1]):
+        if pos[0] - 1 >= 0 and tab[pos[0] - 1][pos[1]] != 0 and not self.knownCase(cases, pos[0] - 1, pos[1]):
             pos[0] -= 1
             return True
-        if pos[1] - 1 >= 0 and tab[pos[0]][pos[1]-1] != 0 and not self.knownCase(cases, pos[0], pos[1] - 1):
+        if pos[1] - 1 >= 0 and tab[pos[0]][pos[1] - 1] != 0 and not self.knownCase(cases, pos[0], pos[1] - 1):
             pos[1] -= 1
             return True
-        if pos[0] + 1 < len(tab) and tab[pos[0]+1][pos[1]] != 0 and not self.knownCase(cases, pos[0] + 1, pos[1]):
+        if pos[0] + 1 < len(tab) and tab[pos[0] + 1][pos[1]] != 0 and not self.knownCase(cases, pos[0] + 1, pos[1]):
             pos[0] += 1
             return True
-        if pos[1] + 1 < len(tab[0]) and tab[pos[0]][pos[1]+1] != 0 and not self.knownCase(cases, pos[0], pos[1] + 1):
+        if pos[1] + 1 < len(tab[0]) and tab[pos[0]][pos[1] + 1] != 0 and not self.knownCase(cases, pos[0], pos[1] + 1):
             pos[1] += 1
             return True
 
@@ -91,14 +93,13 @@ class Game:
 
         return cases
 
-    def initialzePlayers(self):
+    def initializePlayers(self):
         posX = self.cases[0].y * (70 + 5) + 30
         posY = self.cases[0].x * (70 + 5) + 30
-        players = []
-        players.append(Player("ressources/pion/pion0.png", posX, posY))
-        players.append(Player("ressources/pion/pion1.png", posX + 25, posY))
-        players.append(Player("ressources/pion/pion2.png", posX, posY + 25))
-        players.append(Player("ressources/pion/pion3.png", posX +25 , posY + 25))
+        players = [Player("ressources/pion/pion0.png", posX, posY),
+                   Player("ressources/pion/pion1.png", posX + 25, posY),
+                   Player("ressources/pion/pion2.png", posX, posY + 25),
+                   Player("ressources/pion/pion3.png", posX + 25, posY + 25)]
 
         return players
 
@@ -116,7 +117,8 @@ class Game:
     def printBoard(self, screen):
 
         pygame.draw.rect(screen, (0, 0, 0), (self.cases[0].y * (70 + 5) + 30, self.cases[0].x * (70 + 5) + 30, 70, 70))
-        pygame.draw.rect(screen, (0, 0, 0), (self.cases[-1].y * (70 + 5) + 30, self.cases[-1].x * (70 + 5) + 30, 70, 70))
+        pygame.draw.rect(screen, (0, 0, 0),
+                         (self.cases[-1].y * (70 + 5) + 30, self.cases[-1].x * (70 + 5) + 30, 70, 70))
 
         for i in self.cases[1:-1]:
             posX = i.x * (70 + 5) + 30
@@ -147,27 +149,38 @@ class Game:
         print("Joueur", first + 1, "commence !")
 
     def switchTurn(self):
-        if self.players[0].turn == True:
+        if (self.players[0].case >= len(self.cases) - 1) & (self.players[1].case >= len(self.cases) - 1) & (self.players[2].case >= len(self.cases) - 1) & (self.players[3].case >= len(self.cases) - 1):
+            return
+
+        if self.players[0].turn:
             self.players[0].turn = False
             self.players[1].turn = True
+            if self.players[1].case >= len(self.cases) - 1:
+                self.switchTurn()
             print("Au tour du Joueur 2 de jouer !")
             return
 
-        if self.players[1].turn == True:
+        if self.players[1].turn:
             self.players[1].turn = False
             self.players[2].turn = True
+            if self.players[2].case >= len(self.cases) - 1:
+                self.switchTurn()
             print("Au tour du Joueur 3 de jouer !")
             return
 
-        if self.players[2].turn == True:
+        if self.players[2].turn:
             self.players[2].turn = False
             self.players[3].turn = True
+            if self.players[3].case >= len(self.cases) - 1:
+                self.switchTurn()
             print("Au tour du Joueur 4 de jouer !")
             return
 
-        if self.players[3].turn == True:
+        if self.players[3].turn:
             self.players[3].turn = False
             self.players[0].turn = True
+            if self.players[0].case >= len(self.cases) - 1:
+                self.switchTurn()
             print("Au tour du Joueur 1 de jouer !")
             return
 
@@ -206,7 +219,7 @@ class Game:
 
         with open("ressources/backup/backup.json") as backupFile:
             data = json.load(backupFile)
-            self.players = self.initialzePlayers()
+            self.players = self.initializePlayers()
 
             self.players[0].turn = data[0]
             self.players[0].money = data[1]
@@ -236,25 +249,49 @@ class Game:
 
     def gameReset(self):
         self.is_playing = False
-        self.players[0].playerReset(30,30)
-        self.players[1].playerReset(55,30)
-        self.players[2].playerReset(30,55)
-        self.players[3].playerReset(55,55)
+        self.players[0].playerReset(30, 30)
+        self.players[1].playerReset(55, 30)
+        self.players[2].playerReset(30, 55)
+        self.players[3].playerReset(55, 55)
 
         return
 
-    def movePawn(self,nb):
-        if nb >= len(self.cases)-1:
-            nb = len(self.cases)-1
+    def movePawn(self, nb):
+        # player4 turn
         if self.players[0].turn:
-            self.players[0].move(self.cases[nb].y * (70 + 5) + 30, self.cases[nb].x * (70 + 5) + 30)
+            self.players[0].case = nb + self.players[3].case
+            if self.players[0].case >= len(self.cases) - 1:
+                self.players[0].case = len(self.cases) - 1
+
+            self.players[0].move(self.cases[self.players[0].case].y * (70 + 5) + 30,
+                                 self.cases[self.players[0].case].x * (70 + 5) + 30)
             return
+
+        # player4 turn
         if self.players[1].turn:
-            self.players[1].move(self.cases[nb].y * (70 + 5) + 30 + 25, self.cases[nb].x * (70 + 5) + 30)
+            self.players[1].case = nb + self.players[1].case
+            if self.players[1].case >= len(self.cases) - 1:
+                self.players[1].case = len(self.cases) - 1
+            self.players[1].move(self.cases[self.players[1].case].y * (70 + 5) + 30 + 25,
+                                 self.cases[self.players[1].case].x * (70 + 5) + 30)
             return
+
+        # player4 turn
         if self.players[2].turn:
-            self.players[2].move(self.cases[nb].y * (70 + 5) + 30, self.cases[nb].x * (70 + 5) + 30 + 25)
+            self.players[2].case = nb + self.players[2].case
+            if self.players[2].case >= len(self.cases) - 1:
+                self.players[2].case = len(self.cases) - 1
+
+            self.players[2].move(self.cases[self.players[2].case].y * (70 + 5) + 30,
+                                 self.cases[self.players[2].case].x * (70 + 5) + 30 + 25)
             return
+
+        # player4 turn
         if self.players[3].turn:
-            self.players[3].move(self.cases[nb].y * (70 + 5) + 30 + 25, self.cases[nb].x * (70 + 5) + 30 + 25)
+            self.players[3].case = nb + self.players[3].case
+            if self.players[3].case >= len(self.cases) - 1:
+                self.players[3].case = len(self.cases) - 1
+
+            self.players[3].move(self.cases[self.players[3].case].y * (70 + 5) + 30 + 25,
+                                 self.cases[self.players[3].case].x * (70 + 5) + 30 + 25)
             return

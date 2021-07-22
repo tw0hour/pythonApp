@@ -81,7 +81,7 @@ game = Game(tab)
 Tk().wm_withdraw()  # to hide the main window
 running = True
 firstTurn = False
-playingue = False
+playingue = True
 
 while running:
 
@@ -101,6 +101,7 @@ while running:
         if playingue == False:
             game.playing()
             playingue = True
+        sleep(0.1)
         # MsgBox = messagebox.askquestion('Quitter', 'Voulez vous vraiment quittter l\'application ?')
 
     else:

@@ -17,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         # up down
         self.rect.y = posY
         self.turn = False
+        self.case = 0
 
     def move(self, x, y):
         self.rect.y = y
@@ -51,6 +52,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.turn = False
+        self.case = 0
 
     def throwTheDice(self):
         return random.randint(2, 12)
