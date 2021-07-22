@@ -59,32 +59,29 @@ menu_button_rect = menu_button.get_rect()
 menu_button_rect.x = math.ceil((screen.get_width() / 2) - (133 / 2))
 menu_button_rect.y = 800
 
+# Setup the cases board
+tab = [[-1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+       [1, 0, 2, 0, 1, 0, 0, 1, 0, 3],
+       [1, 0, 1, 0, 3, 1, 0, 2, 0, 1],
+       [2, 0, 1, 0, 0, 1, 0, 1, 0, 1],
+       [1, 0, 1, 0, 1, 1, 0, 1, 0, 2],
+       [1, 0, 2, 0, 1, 0, 0, 1, 0, 1],
+       [1, 0, 1, 0, 3, 0, 0, 1, 0, 1],
+       [1, 1, 1, 0, 1, 1, 1, 1, 0, -2]
+       ]
+
 # load game
-game = Game()
+game = Game(tab)
 
 Tk().wm_withdraw()  # to hide the main window
 running = True
-
-# Get events Game
-
-tab = [
-        [-1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
-        [1, 0, 2, 0, 1, 0, 0, 1, 0, 3],
-        [1, 0, 1, 0, 3, 1, 0, 2, 0, 1],
-        [2, 0, 1, 0, 0, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 1, 0, 1, 0, 2],
-        [1, 0, 2, 0, 1, 0, 0, 1, 0, 1],
-        [1, 0, 1, 0, 3, 0, 0, 1, 0, 1],
-        [1, 1, 1, 0, 1, 1, 1, 1, 0, -2]
-    ]
-
 
 while running:
 
     if game.is_playing:
         # game started
         pygame.draw.rect(screen, (255, 255, 255), (0, 0, screen.get_width(), screen.get_height()))
-        game.run(screen,tab)
+        game.run(screen, tab)
         # game.update(screen, boardGame)
         screen.blit(quit_button, quit_button_rect)
         screen.blit(save_button, save_button_rect)

@@ -9,19 +9,88 @@ from Thimble import Thimble
 
 
 class Game:
-    def __init__(self):
+    def __init__(self,tab):
         # JEU A COMMMENCER OU PAS
         self.is_playing = False
-        # create player
-        self.player1 = Player('ressources/pion/1.png')
-        self.player2 = Player('ressources/pion/2.png')
-        self.player3 = Player('ressources/pion/3.png')
-        self.player4 = Player('ressources/pion/4.png')
-
         self.thimble1 = Thimble()
         self.thimble2 = Thimble()
-
         self.events = self.getEvents()
+        self.cases = self.initializeCases(tab)
+        # create player
+        self.players = self.initialzePlayers()
+
+    def run(self, screen, tab):
+
+        self.printBoard(screen)
+        for i in range(4) :
+            screen.blit(self.players[i].image, self.players[i].rect)
+
+
+    def find_in_list_of_list(self, mylist, pos):
+        for sub_list in mylist:
+            if pos in sub_list:
+                return (mylist.index(sub_list), sub_list.index(pos))
+        raise ValueError("'{pos}' is not in list".format(pos=pos))
+
+    def knownCase(self, cases, x, y):
+        for case in cases:
+            if case.x == x and case.y == y:
+                return True
+        return False
+
+    def notVisitedCase(self, tab, cases, pos):
+
+        if pos[0] - 1 >= 0 and tab[pos[0]-1][pos[1]] != 0 and not self.knownCase(cases, pos[0] - 1, pos[1]):
+            pos[0] -= 1
+            return True
+        if pos[1] - 1 >= 0 and tab[pos[0]][pos[1]-1] != 0 and not self.knownCase(cases, pos[0], pos[1] - 1):
+            pos[1] -= 1
+            return True
+        if pos[0] + 1 < len(tab) and tab[pos[0]+1][pos[1]] != 0 and not self.knownCase(cases, pos[0] + 1, pos[1]):
+            pos[0] += 1
+            return True
+        if pos[1] + 1 < len(tab[0]) and tab[pos[0]][pos[1]+1] != 0 and not self.knownCase(cases, pos[0], pos[1] + 1):
+            pos[1] += 1
+            return True
+
+        return False
+
+    def initializeCases(self, tab):
+        cases = []
+        moneyEvents = [x for x in self.getEvents() if x.target == "money"]
+        moveEvents = [x for x in self.getEvents() if x.target == "move"]
+
+        actual = list(self.find_in_list_of_list(tab, -1))
+        cases.append(Case(actual[0], actual[1], None))
+
+        while self.notVisitedCase(tab, cases, actual):
+            i, j = actual[0], actual[1]
+            if tab[i][j] == 2:
+                if len(moveEvents) > 0:
+                    cases.append(Case(i, j, moveEvents.pop()))
+                else:
+                    tab[i][j] = 1
+
+            if tab[i][j] == 3:
+                if len(moneyEvents) > 0:
+                    cases.append(Case(i, j, moneyEvents.pop()))
+                else:
+                    tab[i][j] = 1
+
+            if tab[i][j] == 1 or tab[i][j] == -1 or tab[i][j] == -2:
+                cases.append(Case(i, j, None))
+
+        return cases
+
+    def initialzePlayers(self):
+        posX = self.cases[0].y * (70 + 5) + 30
+        posY = self.cases[0].x * (70 + 5) + 30
+        players = []
+        players.append(Player("ressources/pion/pion0.png", posX, posY))
+        players.append(Player("ressources/pion/pion1.png", posX + 25, posY))
+        players.append(Player("ressources/pion/pion2.png", posX, posY + 25))
+        players.append(Player("ressources/pion/pion3.png", posX +25 , posY + 25))
+        return players
 
     def getEvents(self):
         with open("ressources/events.json") as file:
@@ -34,50 +103,25 @@ class Game:
 
             return events
 
-    def printBoard(self,screen,tab):
-        cases = []
-        moneyEvents = [x for x in self.getEvents() if x.target == "money"]
-        moveEvents = [x for x in self.getEvents() if x.target == "move"]
-        posX, posY = 30, 30
+    def printBoard(self, screen):
 
-        for i in range(len(tab)):
-            posX = 30
-            posY += 75
-            for j in range(len(tab[i])):
+        pygame.draw.rect(screen, (0, 0, 0), (self.cases[0].y * (70 + 5) + 30, self.cases[0].x * (70 + 5) + 30, 70, 70))
+        pygame.draw.rect(screen, (0, 0, 0), (self.cases[-1].y * (70 + 5) + 30, self.cases[-1].x * (70 + 5) + 30, 70, 70))
 
-                # move event case
-                if tab[i][j] == 2:
-                    if len(moveEvents) > 0:
-                        cases.append(Case(posX, posY, moveEvents.pop()))
-                        pygame.draw.rect(screen, (255, 36, 65), (posX, posY, 70, 70))
-                    else:
-                        tab[i][j] = 1
+        for i in self.cases[1:-1]:
+            posX = i.x * (70 + 5) + 30
+            posY = i.y * (70 + 5) + 30
+            # normal case
+            if i.event is None:
+                pygame.draw.rect(screen, (66, 135, 245), (posY, posX, 70, 70))
 
-                # money event case
-                if tab[i][j] == 3:
-                    if len(moneyEvents) > 0:
-                        cases.append(Case(posX, posY, moneyEvents.pop()))
-                        pygame.draw.rect(screen, (255, 189, 36), (posX, posY, 70, 70))
-                    else:
-                        tab[i][j] = 1
+            # move event case
+            elif i.event.target == "move":
+                pygame.draw.rect(screen, (255, 36, 65), (posY, posX, 70, 70))
 
-                # normal case
-                if tab[i][j] == 1:
-                    cases.append(Case(posX, posY, None))
-                    pygame.draw.rect(screen, (66, 135, 245), (posX, posY, 70, 70))
-
-                # -1 start -2 end
-                if tab[i][j] == -1 or tab[i][j] == -2:
-                    cases.append(Case(posX, posY, 0))
-                    pygame.draw.rect(screen, (0, 0, 0), (posX, posY, 70, 70))
-
-                posX += 75
-
-
-    def run(self,screen,tab):
-        # end = False
-        # while not end :
-        self.printBoard(screen,tab)
+            # money event case
+            elif i.event.target == "money":
+                pygame.draw.rect(screen, (255, 189, 36), (posY, posX, 70, 70))
 
     # def update(self, screen, BackGround):
     #
@@ -88,42 +132,35 @@ class Game:
     #     screen.blit(self.player1.image, self.player1.rect)
 
     def whoIsFirst(self):
-        first = random.randint(1, 4)
+        first = random.randint(0, 3)
         print("whoIsFist :", first)
 
-        if first == 1:
-            self.player1.turn = True
-        if first == 2:
-            self.player2.turn = True
-        if first == 3:
-            self.player3.turn = True
-        if first == 4:
-            self.player4.turn = True
+        self.players[first].turn = True;
 
         print("Joueur", first, "commence !")
 
     def switchTurn(self):
-        if self.player1.turn == True:
-            self.player1.turn = False
-            self.player2.turn = True
+        if self.players[0].turn == True:
+            self.players[0].turn = False
+            self.players[1].turn = True
             print("Au tour du Joueur 2 de jouer !")
             return
 
-        if self.player2.turn == True:
-            self.player2.turn = False
-            self.player3.turn = True
+        if self.players[1].turn == True:
+            self.players[1].turn = False
+            self.players[2].turn = True
             print("Au tour du Joueur 3 de jouer !")
             return
 
-        if self.player3.turn == True:
-            self.player3.turn = False
-            self.player4.turn = True
+        if self.players[2].turn == True:
+            self.players[2].turn = False
+            self.players[3].turn = True
             print("Au tour du Joueur 4 de jouer !")
             return
 
-        if self.player4.turn == True:
-            self.player4.turn = False
-            self.player1.turn = True
+        if self.players[3].turn == True:
+            self.players[3].turn = False
+            self.players[0].turn = True
             print("Au tour du Joueur 1 de jouer !")
             return
 
@@ -197,34 +234,16 @@ class Game:
 
         return
 
-    # board_rects = [  ( 200,100,250,250, red ), ( 150,75,350,300, green ), ( 100,50,450,350, red ) ]
-    # for rect in board_rects:
-    #     x_pos, y_pos  = rect[0], rect[1]
-    #     width, height = rect[2], rect[3]
-    #     colour        = rect[4]
-    #     pygame.draw.rect( screen, colour, ( x_pos, y_pos, width, height ), 2 )
-
-    # int the_round(PLAYER *player,int nb_player,int my_round)
-    # {
-    #     int value;
-    #     if(nb_player==2)
-    #     {
-    #         if(my_round%2==0)value = 0;
-    #         else value = 1;
-    #     }
-    #     else if(nb_player==3)
-    #     {
-    #         if(my_round%3==0)value = 0;
-    #         else if(my_round%3==1)value = 1;
-    #         else if(my_round%3==2)value = 2;
-    #     }
-    #     else if(nb_player==4)
-    #     {
-    #         if(my_round%4==0)value = 0;
-    #         else if(my_round%4==1)value = 1;
-    #         else if(my_round%4==2)value = 2;
-    #         else if(my_round%4==3)value = 3;
-    #     }
-    #
-    #     return value;
-    # }
+    def movePawn(self,nb):
+        if self.players[0].turn:
+            self.players[0].move(self.cases[nb].y * (70 + 5) + 30, self.cases[nb].x * (70 + 5) + 30)
+            return
+        if self.players[1].turn:
+            self.players[1].move(self.cases[nb].y * (70 + 5) + 30 + 25, self.cases[nb].x * (70 + 5) + 30)
+            return
+        if self.players[2].turn:
+            self.players[2].move(self.cases[nb].y * (70 + 5) + 30, self.cases[nb].x * (70 + 5) + 30 + 25)
+            return
+        if self.players[3].turn:
+            self.players[3].move(self.cases[nb].y * (70 + 5) + 30 + 25, self.cases[nb].x * (70 + 5) + 30 + 25)
+            return
