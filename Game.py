@@ -26,6 +26,7 @@ class Game:
             screen.blit(self.players[i].image, self.players[i].rect)
 
 
+
     def find_in_list_of_list(self, mylist, pos):
         for sub_list in mylist:
             if pos in sub_list:
@@ -90,6 +91,7 @@ class Game:
         players.append(Player("ressources/pion/pion1.png", posX + 25, posY))
         players.append(Player("ressources/pion/pion2.png", posX, posY + 25))
         players.append(Player("ressources/pion/pion3.png", posX +25 , posY + 25))
+
         return players
 
     def getEvents(self):
@@ -198,7 +200,7 @@ class Game:
     def load(self):
         with open("ressources/backup/backup.json") as backupFile:
             data = json.load(backupFile)
-            self.players = []
+            self.players = self.initialzePlayers()
 
             self.players[0].turn = data[0]
             self.players[0].money = data[1]
@@ -228,10 +230,10 @@ class Game:
 
     def gameReset(self):
         self.is_playing = False
-        self.players[0].playerReset()
-        self.players[1].playerReset()
-        self.players[2].playerReset()
-        self.players[3].playerReset()
+        self.players[0].playerReset(30,30)
+        self.players[1].playerReset(55,30)
+        self.players[2].playerReset(30,55)
+        self.players[3].playerReset(55,55)
 
         return
 

@@ -44,12 +44,12 @@ class Player(pygame.sprite.Sprite):
 
         self.point -= point
 
-    def playerReset(self):
+    def playerReset(self,x,y):
         self.money = 100
         self.point = 100
         self.rect = self.image.get_rect()
-        self.rect.x = 30
-        self.rect.y = 30
+        self.rect.x = x
+        self.rect.y = y
         self.turn = False
 
     def throwTheDice(self):
