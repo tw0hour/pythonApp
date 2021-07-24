@@ -43,9 +43,9 @@ class Game:
         raise ValueError("'{pos}' is not in list".format(pos=pos))
 
     @staticmethod
-    def knownCase(cases, x, y):
+    def knownCase(cases, i, j):
         for case in cases:
-            if case.x == x and case.y == y:
+            if case.x == j and case.y == i:
                 return True
         return False
 
@@ -72,30 +72,30 @@ class Game:
         moveEvents = [x for x in self.getEvents() if x.target == "move"]
 
         actual = list(self.find_in_list_of_list(tab, -1))
-        cases.append(Case(actual[0], actual[1], None))
+        cases.append(Case(actual[1],actual[0], None))
 
         while self.notVisitedCase(tab, cases, actual):
             i, j = actual[0], actual[1]
             if tab[i][j] == 2:
                 if len(moveEvents) > 0:
-                    cases.append(Case(i, j, moveEvents.pop()))
+                    cases.append(Case(j, i, moveEvents.pop()))
                 else:
                     tab[i][j] = 1
 
             if tab[i][j] == 3:
                 if len(moneyEvents) > 0:
-                    cases.append(Case(i, j, moneyEvents.pop()))
+                    cases.append(Case(j, i, moneyEvents.pop()))
                 else:
                     tab[i][j] = 1
 
             if tab[i][j] == 1 or tab[i][j] == -1 or tab[i][j] == -2:
-                cases.append(Case(i, j, None))
+                cases.append(Case(j, i, None))
 
         return cases
 
     def initializePlayers(self):
-        posX = self.cases[0].y * (70 + 5) + 30
-        posY = self.cases[0].x * (70 + 5) + 30
+        posX = self.cases[0].x * (70 + 5) + 30
+        posY = self.cases[0].y * (70 + 5) + 30
         players = [Player("ressources/pion/j1.png", posX, posY),
                    Player("ressources/pion/j2.png", posX + 25, posY),
                    Player("ressources/pion/j3.png", posX, posY + 25),
@@ -116,13 +116,13 @@ class Game:
 
     def printBoard(self, screen):
 
-        pygame.draw.rect(screen, (0, 0, 0), (self.cases[0].y * (70 + 5) + 30, self.cases[0].x * (70 + 5) + 30, 70, 70))
+        pygame.draw.rect(screen, (0, 0, 0), (self.cases[0].x * (70 + 5) + 30, self.cases[0].y * (70 + 5) + 30, 70, 70))
         pygame.draw.rect(screen, (0, 0, 0),
-                         (self.cases[-1].y * (70 + 5) + 30, self.cases[-1].x * (70 + 5) + 30, 70, 70))
+                         (self.cases[-1].x * (70 + 5) + 30, self.cases[-1].y * (70 + 5) + 30, 70, 70))
 
         for i in self.cases[1:-1]:
-            posX = i.x * (70 + 5) + 30
-            posY = i.y * (70 + 5) + 30
+            posX = i.y * (70 + 5) + 30
+            posY = i.x * (70 + 5) + 30
             # normal case
             if i.event is None:
                 pygame.draw.rect(screen, (66, 135, 245), (posY, posX, 70, 70))
@@ -251,12 +251,12 @@ class Game:
     def movePawn(self, nb):
         # player4 turn
         if self.players[0].turn:
-            self.players[0].case = nb + self.players[3].case
+            self.players[0].case = nb + self.players[0].case
             if self.players[0].case >= len(self.cases) - 1:
                 self.players[0].case = len(self.cases) - 1
 
-            self.players[0].move(self.cases[self.players[0].case].y * (70 + 5) + 30,
-                                 self.cases[self.players[0].case].x * (70 + 5) + 30)
+            self.players[0].move(self.cases[self.players[0].case].x * (70 + 5) + 30,
+                                 self.cases[self.players[0].case].y * (70 + 5) + 30)
             return
 
         # player4 turn
@@ -264,8 +264,8 @@ class Game:
             self.players[1].case = nb + self.players[1].case
             if self.players[1].case >= len(self.cases) - 1:
                 self.players[1].case = len(self.cases) - 1
-            self.players[1].move(self.cases[self.players[1].case].y * (70 + 5) + 30 + 25,
-                                 self.cases[self.players[1].case].x * (70 + 5) + 30)
+            self.players[1].move(self.cases[self.players[1].case].x * (70 + 5) + 30 + 25,
+                                 self.cases[self.players[1].case].y * (70 + 5) + 30)
             return
 
         # player4 turn
@@ -274,8 +274,8 @@ class Game:
             if self.players[2].case >= len(self.cases) - 1:
                 self.players[2].case = len(self.cases) - 1
 
-            self.players[2].move(self.cases[self.players[2].case].y * (70 + 5) + 30,
-                                 self.cases[self.players[2].case].x * (70 + 5) + 30 + 25)
+            self.players[2].move(self.cases[self.players[2].case].x * (70 + 5) + 30,
+                                 self.cases[self.players[2].case].y * (70 + 5) + 30 + 25)
             return
 
         # player4 turn
@@ -284,6 +284,6 @@ class Game:
             if self.players[3].case >= len(self.cases) - 1:
                 self.players[3].case = len(self.cases) - 1
 
-            self.players[3].move(self.cases[self.players[3].case].y * (70 + 5) + 30 + 25,
-                                 self.cases[self.players[3].case].x * (70 + 5) + 30 + 25)
+            self.players[3].move(self.cases[self.players[3].case].x * (70 + 5) + 30 + 25,
+                                 self.cases[self.players[3].case].y * (70 + 5) + 30 + 25)
             return
