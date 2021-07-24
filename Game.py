@@ -1,5 +1,7 @@
 import json
 import random
+from time import sleep
+from tkinter import messagebox, Tk
 
 import pygame
 
@@ -28,9 +30,9 @@ class Game:
 
     def playing(self):
         # les dés
-        self.movePawn(self.thimble1.sumThimble(self.thimble2))
-
-        # TODO verifie event -> fonction -> action event
+        player = self.movePawn(self.thimble1.sumThimble(self.thimble2))
+        self.manageEvent(player)
+        print("MMMOONNEEYY : ",player.money)
         self.switchTurn()
         # apply background and change
         pygame.display.flip()
@@ -177,31 +179,13 @@ class Game:
             return
 
     def save(self):
-        gameProps = [
-            self.players[0].turn,
-            self.players[0].money,
-            self.players[0].point,
-            self.players[0].rect.x,
-            self.players[0].rect.y,
-
-            self.players[1].turn,
-            self.players[1].money,
-            self.players[1].point,
-            self.players[1].rect.x,
-            self.players[1].rect.y,
-
-            self.players[2].turn,
-            self.players[2].money,
-            self.players[2].point,
-            self.players[2].rect.x,
-            self.players[2].rect.y,
-
-            self.players[3].turn,
-            self.players[3].money,
-            self.players[3].point,
-            self.players[3].rect.x,
-            self.players[3].rect.y,
-        ]
+        gameProps = []
+        for i in range(4) :
+            gameProps.append(self.players[i].turn)
+            gameProps.append(self.players[i].money)
+            gameProps.append(self.players[i].point)
+            gameProps.append(self.players[i].rect.x)
+            gameProps.append(self.players[i].rect.y)
         saveJson = json.dumps(gameProps)
 
         with open("ressources/backup/backup.json", "w") as backupFile:
@@ -257,7 +241,7 @@ class Game:
 
             self.players[0].move(self.cases[self.players[0].case].x * (70 + 5) + 30,
                                  self.cases[self.players[0].case].y * (70 + 5) + 30)
-            return
+            return self.players[0]
 
         # player4 turn
         if self.players[1].turn:
@@ -266,7 +250,7 @@ class Game:
                 self.players[1].case = len(self.cases) - 1
             self.players[1].move(self.cases[self.players[1].case].x * (70 + 5) + 30 + 25,
                                  self.cases[self.players[1].case].y * (70 + 5) + 30)
-            return
+            return self.players[1]
 
         # player4 turn
         if self.players[2].turn:
@@ -276,7 +260,7 @@ class Game:
 
             self.players[2].move(self.cases[self.players[2].case].x * (70 + 5) + 30,
                                  self.cases[self.players[2].case].y * (70 + 5) + 30 + 25)
-            return
+            return self.players[2]
 
         # player4 turn
         if self.players[3].turn:
@@ -286,4 +270,16 @@ class Game:
 
             self.players[3].move(self.cases[self.players[3].case].x * (70 + 5) + 30 + 25,
                                  self.cases[self.players[3].case].y * (70 + 5) + 30 + 25)
-            return
+            return self.players[3]
+
+
+    def manageEvent(self,player):
+        if self.cases[player.case].event and self.cases[player.case].event.target == "move":
+            messagebox.showwarning("Case évenement mouvement !","Attention vous allez changer de place")
+            self.manageEvent(self.movePawn(self.cases[player.case].event.effect))
+
+        if self.cases[player.case].event and self.cases[player.case].event.target == "money":
+            messagebox.showwarning("Case évenement argent !"," Attention vous allez perdre ou gagnger de l'argent !")
+            player.gainMoney(self.cases[player.case].event.effect)
+
+
